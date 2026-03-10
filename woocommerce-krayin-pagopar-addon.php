@@ -53,9 +53,8 @@ class WC_Krayin_Pagopar_Addon {
                 $payment_method = trim($matches[1]);
 
                 if (!empty($payment_method)) {
-                    // Update order meta
-                    $order->update_meta_data('_pagopar_payment_method', $payment_method);
-                    $order->save();
+                    // Update order meta using update_post_meta to avoid triggering full order save hooks/webhooks
+                    update_post_meta($order->get_id(), '_pagopar_payment_method', $payment_method);
                 }
             }
         }
